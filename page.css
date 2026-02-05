@@ -70,3 +70,7 @@
 .choice:hover {
   transform: scale(103%);
 }
+
+.selected-choice {
+  background-color: blue;
+}
