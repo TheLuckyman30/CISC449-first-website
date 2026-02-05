@@ -1,5 +1,8 @@
 const questions = [
-  { question: "Is it called football or soccer?", choices: ["Yes", "No"] },
+  {
+    question: "Is it called football or soccer?",
+    choices: ["Football", "Football"],
+  },
 ];
 
 let currentPage = -1;
@@ -25,10 +28,21 @@ function updatePage() {
     document.getElementById("title").hidden = true;
     document.getElementById("question").hidden = false;
     prevButton.hidden = false;
+    const currentQuestion = questions[currentPage];
 
-    if (questions[currentPage]) {
+    if (currentQuestion) {
       document.getElementById("question-title").textContent =
-        questions[currentPage].question;
+        currentQuestion.question;
+
+      const choiceSection = document.getElementById("question-choices");
+      choiceSection.innerHTML = "";
+      for (const choice of currentQuestion.choices) {
+        const newChoice = document.createElement("div");
+        const text = document.createTextNode(choice);
+        newChoice.appendChild(text);
+        newChoice.className = "choice";
+        choiceSection.appendChild(newChoice);
+      }
     }
   } else {
     document.getElementById("title").hidden = false;
