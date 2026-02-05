@@ -74,3 +74,22 @@
 .selected-choice {
   background-color: blue;
 }
+
+.question-response {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.response-correct {
+  border: solid rgb(194, 255, 204) 3px;
+}
+
+.response-wrong {
+  border: solid rgb(255, 194, 194) 3px;
+}

@@ -2,20 +2,38 @@ const questions = [
   {
     question: "Is it called football or soccer?",
     choices: [
-      { text: "Football", correct: true },
-      { text: "Football", correct: true },
+      {
+        text: "Football",
+        response: "Only one true answer",
+        correct: true,
+        selected: false,
+      },
+      {
+        text: "Football",
+        response: "Only one true answer",
+        correct: true,
+        selected: false,
+      },
     ],
-    selectedChoiceId: "",
-    answered: false,
+    selectedChoice: null,
   },
   {
     question: "Is it called football or soccer?",
     choices: [
-      { text: "Soccer", correct: true },
-      { text: "Soccer", correct: true },
+      {
+        text: "Soccer",
+        response: "Seriously...",
+        correct: false,
+        selected: false,
+      },
+      {
+        text: "Soccer",
+        response: "Seriously...",
+        correct: false,
+        selected: false,
+      },
     ],
-    selectedChoiceId: "",
-    answered: false,
+    selectedChoice: null,
   },
 ];
 
@@ -23,6 +41,7 @@ const titleSection = document.getElementById("title");
 const questionSection = document.getElementById("question");
 const questionTitle = document.getElementById("question-title");
 const questionChoiceSection = document.getElementById("question-choices");
+const questionResponse = document.getElementById("question-response");
 const prevButton = document.getElementById("prev-page");
 const nextButton = document.getElementById("next-page");
 let currentPage = -1;
@@ -42,6 +61,9 @@ nextButton.addEventListener("click", () => {
 });
 
 function updatePage() {
+  questionResponse.innerHTML = "";
+  questionResponse.className = "";
+
   if (currentPage > -1) {
     titleSection.hidden = true;
     questionSection.hidden = false;
@@ -51,6 +73,15 @@ function updatePage() {
     if (currentQuestion) {
       questionTitle.textContent = currentQuestion.question;
 
+      if (currentQuestion.selectedChoice) {
+        questionResponse.innerHTML = currentQuestion.selectedChoice.response;
+        if (currentQuestion.selectedChoice.correct) {
+          questionResponse.className = "question-response response-correct";
+        } else {
+          questionResponse.className = "question-response response-wrong";
+        }
+      }
+
       const controller = new AbortController();
       const { signal } = controller;
       questionChoiceSection.innerHTML = "";
@@ -59,15 +90,15 @@ function updatePage() {
         const text = document.createTextNode(choice.text);
         newChoice.appendChild(text);
         newChoice.id = `choice${index}`;
-        newChoice.className =
-          currentQuestion.selectedChoiceId === newChoice.id
-            ? "choice selected-choice"
-            : "choice";
+        newChoice.className = choice.selected
+          ? "choice selected-choice"
+          : "choice";
 
-        if (!currentQuestion.selectedChoiceId) {
+        if (!currentQuestion.selectedChoice) {
           newChoice.addEventListener(
             "click",
-            () => selectChoice(newChoice.id, currentQuestion, controller),
+            () =>
+              selectChoice(newChoice.id, currentQuestion, choice, controller),
             {
               signal,
             },
@@ -84,9 +115,16 @@ function updatePage() {
   }
 }
 
-function selectChoice(id, currentQuestion, controller) {
+function selectChoice(id, currentQuestion, choice, controller) {
   const selectedElement = document.getElementById(id);
   selectedElement.className = "choice selected-choice";
-  currentQuestion.selectedChoiceId = selectedElement.id;
-  controller.abort();
+  currentQuestion.selectedChoice = choice;
+  choice.selected = true;
+  questionResponse.innerHTML = choice.response;
+  if (choice.correct) {
+    questionResponse.className = "question-response response-correct";
+  } else {
+    questionResponse.className = "question-response response-wrong";
+  }
+  if (selectedElement) controller.abort();
 }
