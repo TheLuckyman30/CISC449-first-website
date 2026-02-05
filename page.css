@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+.main {
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto;
+}
+
+.title {
+  width: 50%;
+  text-align: center;
+}
