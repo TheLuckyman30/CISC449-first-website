@@ -1,3 +1,5 @@
+let ballKnowledge = 0;
+
 const questions = [
   {
     question: "What kind of football do you think this quiz is referring to?",
