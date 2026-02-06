@@ -48,6 +48,14 @@
   color: white;
 }
 
+.question-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
 .question-choices {
   display: grid;
   gap: 10px;
@@ -65,6 +73,7 @@
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition-duration: 100ms;
+  width: 20rem;
 }
 
 .choice:hover {
@@ -92,4 +101,8 @@
 
 .response-wrong {
   border: solid rgb(255, 194, 194) 3px;
+}
+
+.image {
+  margin-bottom: 15px;
 }

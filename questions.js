@@ -37,6 +37,7 @@ const questions = [
   },
   {
     question: "Who is this very prominent football figure?",
+    image: "./images/pep.jpg",
     choices: [
       {
         text: "Pep Guardiola",
@@ -68,6 +69,7 @@ const questions = [
   },
   {
     question: "How about this guy (another totally prominent football figure)?",
+    image: "./images/jim.png",
     choices: [
       {
         text: "James Zanzi",
@@ -101,6 +103,7 @@ const questions = [
   },
   {
     question: "What is wrong with this tactic?",
+    image: "./images/tactic1.png",
     choices: [
       {
         text: "Not attacking enough",
@@ -134,6 +137,7 @@ const questions = [
   },
   {
     question: "Ok. How about this one?",
+    image: "./images/tactic2.png",
     choices: [
       {
         text: "Well it seems fine to me, maybe your players are just shit?",
@@ -198,6 +202,7 @@ const questions = [
   },
   {
     question: "What's this guy known for?",
+    image: "./images/xadas.png",
     choices: [
       {
         text: "Wearing the number 19 jersey for a team that wears yellow.",
@@ -288,6 +293,7 @@ const questionSection = document.getElementById("question");
 const questionTitle = document.getElementById("question-title");
 const questionChoiceSection = document.getElementById("question-choices");
 const questionResponse = document.getElementById("question-response");
+const questionImage = document.getElementById("question-image");
 const prevButton = document.getElementById("prev-page");
 const nextButton = document.getElementById("next-page");
 let currentPage = -1;
@@ -317,6 +323,12 @@ function updatePage() {
     const currentQuestion = questions[currentPage];
 
     if (currentQuestion) {
+      if (currentQuestion.image) {
+        questionImage.src = currentQuestion.image;
+      } else {
+        questionImage.src = "";
+      }
+
       questionTitle.textContent = currentQuestion.question;
 
       if (currentQuestion.selectedChoice) {
