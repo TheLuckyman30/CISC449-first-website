@@ -54,6 +54,7 @@ function updatePage() {
     titleSection.hidden = true;
     questionSection.style.display = "flex";
     prevButton.hidden = false;
+    resultSection.hidden = true;
     const currentQuestion = questions[currentPage];
 
     if (currentQuestion) {
