@@ -331,6 +331,7 @@ const questionChoiceSection = document.getElementById("question-choices");
 const questionResponse = document.getElementById("question-response");
 const questionImage = document.getElementById("question-image");
 const knowledge = document.getElementById("ball-knowledge");
+const resultSection = document.getElementById("result");
 const prevButton = document.getElementById("prev-page");
 const nextButton = document.getElementById("next-page");
 let currentPage = -1;
@@ -345,7 +346,7 @@ prevButton.addEventListener("click", () => {
 });
 
 nextButton.addEventListener("click", () => {
-  if (currentPage < questions.length - 1) {
+  if (currentPage < questions.length) {
     currentPage++;
     updatePage();
   }
@@ -355,9 +356,38 @@ function updatePage() {
   questionResponse.innerHTML = "";
   questionResponse.className = "";
 
-  if (currentPage > -1) {
+  if (currentPage === questions.length) {
+    questionSection.style.display = "none";
+    nextButton.hidden = true;
+    resultSection.hidden = false;
+
+    if (ballKnowledge <= -5) {
+      resultSection.innerHTML =
+        "I think an infant might have more ball knowledge than you.";
+    } else if (ballKnowledge <= 0) {
+      resultSection.innerHTML =
+        "I wouldn't even let you near a sunday league team.";
+    } else if (ballKnowledge <= 5) {
+      resultSection.innerHTML = `${ballKnowledge} Not great. Not terrible.`;
+    } else if (ballKnowledge <= 15) {
+      resultSection.innerHTML =
+        "Keep this up, and I may consult you whenever my team goes through another rough patch (it won't be long until that happens)";
+    } else if (ballKnowledge <= 20) {
+      resultSection.innerHTML =
+        "I could only dream of having this much ball knowledge.";
+    } else {
+      resultSection.innerHTML =
+        "Holy shit. You are the chosen one. You might also be clincally insane for subjecting yourself to this bullshit.";
+    }
+  } else if (currentPage > -1) {
+    if (currentPage === questions.length - 1) {
+      nextButton.innerHTML = "Get Results";
+    } else {
+      nextButton.innerHTML = "Next";
+    }
+    nextButton.hidden = false;
     titleSection.hidden = true;
-    questionSection.hidden = false;
+    questionSection.style.display = "flex";
     prevButton.hidden = false;
     const currentQuestion = questions[currentPage];
 
@@ -407,7 +437,7 @@ function updatePage() {
     }
   } else {
     titleSection.hidden = false;
-    questionSection.hidden = true;
+    questionSection.style.display = "none";
     prevButton.hidden = true;
   }
 }
