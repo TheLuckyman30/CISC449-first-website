@@ -33,7 +33,7 @@ function updatePage() {
       resultSection.innerHTML =
         "I wouldn't even let you near a sunday league team.";
     } else if (ballKnowledge <= 5) {
-      resultSection.innerHTML = `${ballKnowledge} Not great. Not terrible.`;
+      resultSection.innerHTML = `${ballKnowledge} ball knowledge. Not great. Not terrible.`;
     } else if (ballKnowledge <= 15) {
       resultSection.innerHTML =
         "Keep this up, and I may consult you whenever my team goes through another rough patch (it won't be long until that happens)";
@@ -57,26 +57,18 @@ function updatePage() {
     const currentQuestion = questions[currentPage];
 
     if (currentQuestion) {
-      if (currentQuestion.image) {
-        questionImage.src = currentQuestion.image;
-      } else {
-        questionImage.src = "";
-      }
-
-      questionTitle.textContent = currentQuestion.question;
-
-      if (currentQuestion.selectedChoice) {
-        questionResponse.innerHTML = currentQuestion.selectedChoice.response;
-        if (currentQuestion.selectedChoice.correct) {
-          questionResponse.className = "question-response response-correct";
-        } else {
-          questionResponse.className = "question-response response-wrong";
-        }
-      }
-
       const controller = new AbortController();
       const { signal } = controller;
+      questionTitle.textContent = currentQuestion.question;
+      questionImage.src = currentQuestion.image ?? "";
       questionChoiceSection.innerHTML = "";
+      if (currentQuestion.selectedChoice) {
+        questionResponse.innerHTML = currentQuestion.selectedChoice.response;
+        questionResponse.className = currentQuestion.selectedChoice.correct
+          ? "question-response response-correct"
+          : "question-response response-wrong";
+      }
+
       for (const [index, choice] of currentQuestion.choices.entries()) {
         const newChoice = document.createElement("div");
         const text = document.createTextNode(choice.text);
@@ -115,11 +107,9 @@ function selectChoice(id, currentQuestion, choice, controller) {
   ballKnowledge += choice.ballKnowledge;
   knowledge.innerHTML = ballKnowledge;
   questionResponse.innerHTML = choice.response;
-  if (choice.correct) {
-    questionResponse.className = "question-response response-correct";
-  } else {
-    questionResponse.className = "question-response response-wrong";
-  }
+  questionResponse.className = choice.correct
+    ? "question-response response-correct"
+    : "question-response response-wrong";
   if (selectedElement) {
     controller.abort();
   }
