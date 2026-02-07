@@ -93,7 +93,9 @@
 }
 
 .selected-choice {
-  background-color: blue;
+  background-color: rgb(130, 148, 253);
+  color: white;
+  font-weight: 700;
 }
 
 .question-response {
